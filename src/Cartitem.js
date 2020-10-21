@@ -1,69 +1,70 @@
 import React from 'react';
 class CartItem extends React.Component{
-    testing(){
-        const promise= new Promise((resolve,reject)=>{
-            setTimeout(()=>{
-                resolve('done');
-            },5000);
-        })
+    // testing(){
+    //     const promise= new Promise((resolve,reject)=>{
+    //         setTimeout(()=>{
+    //             resolve('done');
+    //         },5000);
+    //     })
 
-    promise.then(()=>{
-        //setState acts like a synchronous call
-        //this.setState({qty:100});
-        this.setState({qty:this.state.qty+10});
-        this.setState({qty:this.state.qty+10});
-        this.setState({qty:this.state.qty+10});
-        console.log('this.state',this.state);
-        })
-    }
-    increaseQuantity=()=>{
-        // this.state.qty+=1;
-        //console.log('this',this.state);
+    // promise.then(()=>{
+    //     //setState acts like a synchronous call
+    //     //this.setState({qty:100});
+    //     this.setState({qty:this.state.qty+10});
+    //     this.setState({qty:this.state.qty+10});
+    //     this.setState({qty:this.state.qty+10});
+    //     console.log('this.state',this.state);
+    //     })
+    // }
+    // increaseQuantity=()=>{
+    //     // this.state.qty+=1;
+    //     //console.log('this',this.state);
         
-        //setState form 1
-        // this.setState({                //this is called batching and will only take the last value(shallow merging)
-        //     qty:this.state.qty+1
-        // });
-        // this.setState({
-        //     qty:this.state.qty+5
-        // });
-        // this.setState({
-        //     qty:this.state.qty+1
-        // });
+    //     //setState form 1
+    //     // this.setState({                //this is called batching and will only take the last value(shallow merging)
+    //     //     qty:this.state.qty+1
+    //     // });
+    //     // this.setState({
+    //     //     qty:this.state.qty+5
+    //     // });
+    //     // this.setState({
+    //     //     qty:this.state.qty+1
+    //     // });
 
 
-        //setState form 2 used when previou state is required
-        this.setState((prevState)=>{
-             return {                       //will return object
-                qty:prevState.qty+2
-            }
-        },()=>{
-            console.log('this.state',this.state);
-        });
-        this.setState((prevState)=>{
-            return {                       //will return object
-               qty:prevState.qty+3
-           }
-       },()=>{
-           console.log('this.state',this.state);
-       });
-       // console.log(this.state);    //it is asynchronous it will show us previous value so we'll use callback instead
-    }
-    decreaseQuantity=()=>{
-        const {qty}=this.state;
-        if(qty==0){
-            return;
-        }
-        this.setState((prevState)=>{
-            return {                       //will return object
-               qty:prevState.qty-1
-           }
-       });
-    }
+    //     //setState form 2 used when previou state is required
+    //     this.setState((prevState)=>{
+    //          return {                       //will return object
+    //             qty:prevState.qty+2
+    //         }
+    //     },()=>{
+    //         console.log('this.state',this.state);
+    //     });
+    //     this.setState((prevState)=>{
+    //         return {                       //will return object
+    //            qty:prevState.qty+3
+    //        }
+    //    },()=>{
+    //        console.log('this.state',this.state);
+    //    });
+    //    // console.log(this.state);    //it is asynchronous it will show us previous value so we'll use callback instead
+    // }
+    // decreaseQuantity=()=>{
+    //     const {qty}=this.state;
+    //     if(qty==0){
+    //         return;
+    //     }
+    //     this.setState((prevState)=>{
+    //         return {                       //will return object
+    //            qty:prevState.qty-1
+    //        }
+    //    });
+    // }
     render(){
-        console.log('render');
-        console.log('this.props',this.props);
+        //console.log('render');
+       // console.log('this.props',this.props);
         const {price,title,qty}=this.props.product;
+        const {product,onIncreaseQuantity, onDecreaseQuantity,onDeleteProduct}=this.props;
         return(
             <div className="cart-item">
                 <div className="left-block">
@@ -79,17 +80,17 @@ class CartItem extends React.Component{
                         alt="increase" 
                         className="action-icons" 
                         src="https://www.flaticon.com/svg/static/icons/svg/992/992651.svg"
-                        onClick={this.increaseQuantity}/>
+                        onClick={()=>onIncreaseQuantity(product)}/>
                         <img 
                         alt="decrease" 
                         className="action-icons" 
                         src="https://www.flaticon.com/svg/static/icons/svg/992/992683.svg"
-                        onClick={this.decreaseQuantity}/>
+                        onClick={()=>onDecreaseQuantity(product)}/>
                         <img 
                         alt="delete"
                         className="action-icons" 
                         src="https://www.flaticon.com/svg/static/icons/svg/1345/1345874.svg"
-                        />
+                        onClick={()=>onDeleteProduct(product)}/>
                     </div>
                     </div>
             </div>
