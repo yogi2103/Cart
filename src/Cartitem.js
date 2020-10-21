@@ -8,6 +8,10 @@ class CartItem extends React.Component{
             qty:1,
             img:''
         }
+        // this.increaseQuantity=this.increaseQuantity.bind(this); for binding the function
+    }
+    increaseQuantity=()=>{
+        console.log('this',this.state);
     }
     render(){
         const {price,title,qty}=this.state;
@@ -22,9 +26,21 @@ class CartItem extends React.Component{
                     <div style={{color:'#777'}}>Qty: {qty}</div>
                     <div className="cart-item-actions">
                         {/*buttons  */}
-                        <img alt="increase" className="action-icons" src="https://www.flaticon.com/svg/static/icons/svg/992/992651.svg"/>
-                        <img alt="decrease" className="action-icons" src="https://www.flaticon.com/svg/static/icons/svg/992/992683.svg"/>
-                        <img alt="delete" className="action-icons" src="https://www.flaticon.com/svg/static/icons/svg/1345/1345874.svg"/>
+                        <img 
+                        alt="increase" 
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/static/icons/svg/992/992651.svg"
+                        onClick={this.increaseQuantity.bind(this)}/>
+                        <img 
+                        alt="decrease" 
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/static/icons/svg/992/992683.svg"
+                        />
+                        <img 
+                        alt="delete"
+                        className="action-icons" 
+                        src="https://www.flaticon.com/svg/static/icons/svg/1345/1345874.svg"
+                        />
                     </div>
                     </div>
             </div>
@@ -41,3 +57,22 @@ let styles={
     background:'#CCC'
   }
 }
+
+// Binding function in js
+// class Vehicle{
+//     constructor(company){
+//         this.company=company;
+//     }
+//     getCompany(){
+//         console.log('this',this);
+//         console.log('this.company',this.company);
+//     }
+// }
+// var car= new Vehicle('Audi');
+// car.getCompany()    //this Vehicle {company: "Audi"}
+//                     //this.company Audi
+// var func=car.getCompany;
+// func()  //this undefined
+
+//Concept of binding
+// var func=car.getCompany.bind(car)
