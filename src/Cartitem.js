@@ -9,24 +9,56 @@ class CartItem extends React.Component{
             img:''
         }
         // this.increaseQuantity=this.increaseQuantity.bind(this); for binding the function
+        this.testing();
+    }
+
+    testing(){
+        const promise= new Promise((resolve,reject)=>{
+            setTimeout(()=>{
+                resolve('done');
+            },5000);
+        })
+
+    promise.then(()=>{
+        //setState acts like a synchronous call
+        //this.setState({qty:100});
+        this.setState({qty:this.state.qty+10});
+        this.setState({qty:this.state.qty+10});
+        this.setState({qty:this.state.qty+10});
+        console.log('this.state',this.state);
+        })
     }
     increaseQuantity=()=>{
         // this.state.qty+=1;
         //console.log('this',this.state);
         
         //setState form 1
+        // this.setState({                //this is called batching and will only take the last value(shallow merging)
+        //     qty:this.state.qty+1
+        // });
+        // this.setState({
+        //     qty:this.state.qty+5
+        // });
         // this.setState({
         //     qty:this.state.qty+1
         // });
+
 
         //setState form 2 used when previou state is required
         this.setState((prevState)=>{
              return {                       //will return object
                 qty:prevState.qty+1
             }
+        },()=>{
+            console.log('this.state',this.state);
         });
+       // console.log(this.state);    //it is asynchronous it will show us previous value so we'll use callback instead
     }
     decreaseQuantity=()=>{
+        const {qty}=this.state;
+        if(qty==0){
+            return;
+        }
         this.setState((prevState)=>{
             return {                       //will return object
                qty:prevState.qty-1
@@ -34,6 +66,7 @@ class CartItem extends React.Component{
        });
     }
     render(){
+        console.log('render');
         const {price,title,qty}=this.state;
         return(
             <div className="cart-item">
