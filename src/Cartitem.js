@@ -9,7 +9,7 @@ class CartItem extends React.Component{
             img:''
         }
         // this.increaseQuantity=this.increaseQuantity.bind(this); for binding the function
-        this.testing();
+        //this.testing();
     }
 
     testing(){
@@ -47,11 +47,18 @@ class CartItem extends React.Component{
         //setState form 2 used when previou state is required
         this.setState((prevState)=>{
              return {                       //will return object
-                qty:prevState.qty+1
+                qty:prevState.qty+2
             }
         },()=>{
             console.log('this.state',this.state);
         });
+        this.setState((prevState)=>{
+            return {                       //will return object
+               qty:prevState.qty+3
+           }
+       },()=>{
+           console.log('this.state',this.state);
+       });
        // console.log(this.state);    //it is asynchronous it will show us previous value so we'll use callback instead
     }
     decreaseQuantity=()=>{
