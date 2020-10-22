@@ -1,5 +1,5 @@
 import React from 'react';
-class CartItem extends React.Component{
+const CartItem=(props)=>{
     // testing(){
     //     const promise= new Promise((resolve,reject)=>{
     //         setTimeout(()=>{
@@ -60,11 +60,10 @@ class CartItem extends React.Component{
     //        }
     //    });
     // }
-    render(){
         //console.log('render');
        // console.log('this.props',this.props);
-        const {price,title,qty}=this.props.product;
-        const {product,onIncreaseQuantity, onDecreaseQuantity,onDeleteProduct}=this.props;
+        const {price,title,qty}=props.product;
+        const {product,onIncreaseQuantity, onDecreaseQuantity,onDeleteProduct}=props;
         return(
             <div className="cart-item">
                 <div className="left-block">
@@ -94,8 +93,7 @@ class CartItem extends React.Component{
                     </div>
                     </div>
             </div>
-        )
-    }
+        );
 }
 
 export default CartItem;
