@@ -1,36 +1,42 @@
 import React from 'react'; 
 import Cart from './Cart';
 import Navbar from './Navbar';
+import firebase from 'firebase';
 class  App extends React.Component {
   constructor(){
     super();    //for calling the constructor of parent class
     this.state={
-        products:[
-            {
-                price:899,
-                title:'Mobile Phone',
-                qty:1,
-                img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80',
-                id:1
-            },{
-                price:999,
-                title:'Watch',
-                qty:1,
-                img:'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80',
-                id:2
-            },
-            {
-                price:49999,
-                title:'Laptop',
-                qty:1,
-                img:'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80',
-                id:3
-            }
-        ]
+        products:[],
+        loading:true
     }
     // this.increaseQuantity=this.increaseQuantity.bind(this); for binding the function
     //this.testing();
 }
+
+componentDidMount(){
+  firebase
+    .firestore()
+    .collection('products')
+    .get()
+    .then((snapshot)=>{
+      console.log(snapshot);    //it is an array of products
+
+      snapshot.docs.map((doc)=>{
+        console.log(doc.data());
+      });
+      const products=snapshot.docs.map((doc)=>{
+        const data=doc.data();
+        data['id']=doc.id;
+        return data;
+      })
+  
+      this.setState({
+        products,   //products:products
+        loading:false
+      })
+    })
+}
+
 handleIncreaseQuantity=(product)=>{
     console.log('Hey increase the qyt of',product);
     const {products}=this.state;
@@ -73,23 +79,27 @@ getCartTotal =()=>{
   const {products}=this.state;
   let CartTotal=0;
   products.map((product)=>{
-    CartTotal=CartTotal+product.qty*product.price;
+    if(product.qty>0){
+      CartTotal=CartTotal+product.qty*product.price;
+    }
+    return '';
   })
   return CartTotal;
 }
   render(){
-    const{products}=this.state;
+    const{products,loading}=this.state;
     return (
       <div className="App">
         <Navbar
           count={this.getCartCount()}
         />
         <Cart
-         products={products}
          onIncreaseQuantity={this.handleIncreaseQuantity}
          onDecreaseQuantity={this.handleDecreaseQuantity}
          onDeleteProduct={this.handleDeleteProduct}
+         products={products}
         /> 
+        {loading && <h1>Loading Products...</h1>}
         <div style={{fontSize:20}}>
           Total:{this.getCartTotal()}
         </div>
